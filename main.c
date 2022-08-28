@@ -26,6 +26,8 @@ int escolhaPrincipal();
 int menuSalas(struct Sala sala[],int quantSalas);
 int escolhaSalas(struct Sala sala[], int quantSalas);
 
+int menuPoltrona();
+
 int menuReserva();
 int escolhaReserva(struct Poltrona poltronas[TAM][TAM]);
 
@@ -83,10 +85,21 @@ int escolhaSalas(struct Sala sala[], int quantSalas){
         return 0;
     }else if(opcao < quantSalas+1 && opcao >= 0){
         do{
+        int sair=0;
         printCineMix();
         printarPoltronas(sala[opcao-1].poltronas);
-
-        escolhaReserva(sala[opcao-1].poltronas);
+        sair = menuPoltrona();
+        if(sair==1){
+            fflush(stdin);
+            escolhaReserva(sala[opcao-1].poltronas);
+        } else if(sair==2){
+            printf("Enter to continue");
+            break;
+        } else {
+            fflush(stdin);
+            printf("Opção invalida!\nEnter to continue");
+            gets(cont);
+        }
         }while(1);
     } else
         printf("\nOpção invalida!\nEnter to continue");
@@ -95,6 +108,16 @@ int escolhaSalas(struct Sala sala[], int quantSalas){
     }while(1);
 }
 
+int menuPoltrona(){
+    setlocale(LC_ALL, "Portuguese");
+    int opcao;
+    printf("| 1 - Escolher poltrona                                                              |");
+    printf("\n| 2 - Sair                                                                           |");
+    printf("\n--------------------------------------------------------------------------------------\n");
+    printf("Digite a opção desejada: ");
+    scanf("%d",&opcao);
+    return opcao;
+}
 
 int menuPrincipal(){
     setlocale(LC_ALL, "Portuguese");
