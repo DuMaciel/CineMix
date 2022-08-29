@@ -39,6 +39,11 @@ void resetPoltronas(struct Poltrona poltronas[TAM][TAM]);
 void printarPoltronas(struct Poltrona poltronas[TAM][TAM]);
 void printCineMix();
 
+void atribuirFilmes(char filmes[]);
+
+int menuAdmin();
+void admin(struct Sala sala[], int quantSalas);
+
 int main()
 {
 
@@ -49,16 +54,19 @@ int main()
     resetPoltronas(sala[i].poltronas);
     }
 
-    int fechar=0;
+    int escolha=0;
 
     do{
-    fechar = escolhaPrincipal();
-    if(fechar == 0){
+    escolha = escolhaPrincipal();
+    if(escolha == 0){
         return 0;
     }
+    if(escolha == 10){
+        admin(sala, quantSalas);
+    } else{
     escolhaSalas(sala, quantSalas);
+    }
     }while(1);
-
     return 0;
 }
 
@@ -142,6 +150,8 @@ int escolhaPrincipal(){
         return 1;
     case 2:
         return 0;
+    case 159753:
+        return 10;
     default:
         printf("\nOpção invalida!\nEnter to continue");
         fflush(stdin);
@@ -375,6 +385,99 @@ void resetPoltronas(struct Poltrona poltronas[TAM][TAM]){
         }
     }
 }
+
+void atribuirFilmes(char filme[]){
+    fflush(stdin);
+    printf("Filme atribuido atualmente na sala: %s\n",filme);
+    printf("Digite o nome do novo Filme: ");
+    gets(filme);
+}
+
+int menuAdmin(){
+    int opcao;
+    printf("| Bem vindo admin do CineMix!                                                        |");
+    printf("\n--------------------------------------------------------------------------------------");
+    printf("\n| 1 - Atribuir nome de filme a uma sala                                              |");
+    printf("\n| 2 - Atribuir nome de filme a todas as salas                                        |");
+    printf("\n| 3 - Resetar poltronas de uma sala                                                  |");
+    printf("\n| 4 - Resetar poltronas de todas as salas                                            |");
+    printf("\n| 5 - Sair                                                                           |");
+    printf("\n--------------------------------------------------------------------------------------\n");
+    printf("Digite a opção desejada: ");
+    scanf("%d",&opcao);
+    return opcao;
+}
+
+void admin(struct Sala sala[], int quantSalas){
+    int opcao;
+    char cont[5];
+    do{
+    printCineMix();
+    opcao = menuAdmin();
+    switch(opcao){
+    case 1:
+        int qSala = menuSalas(sala,quantSalas);
+        if(qSala==quantSalas+1){
+            break;
+        }else if(qSala<quantSalas+1 && qSala>0){
+        atribuirFilmes(sala[qSala-1].filme);
+        }else {
+            fflush(stdin);
+            printf("Opção invalida!\nEnter to continue");
+            gets(cont);
+        }
+        break;
+    case 2:
+        for(int i=0; i<quantSalas; i++){
+        int qSala = menuSalas(sala,quantSalas);
+        if(qSala==quantSalas+1){
+            break;
+        }else if(qSala<quantSalas+1 && qSala>0){
+        atribuirFilmes(sala[qSala-1].filme);
+        }else {
+            fflush(stdin);
+            printf("Opção invalida!\nEnter to continue");
+            gets(cont);
+        }
+        }
+        break;
+    case 3:
+        do{
+        int qSala = menuSalas(sala,quantSalas);
+        if(qSala==quantSalas+1){
+            break;
+        }else if(qSala<quantSalas+1 && qSala>0){
+        resetPoltronas(sala[qSala-1].poltronas);
+        printf("Poltronas da sala %d resetada!\nEnter to continue", qSala);
+            fflush(stdin);
+            gets(cont);
+        }else {
+            fflush(stdin);
+            printf("Opção invalida!\nEnter to continue");
+            gets(cont);
+        }
+        }while(1);
+        break;
+    case 4:
+        for(int i=0; i<quantSalas; i++){
+        resetPoltronas(sala[i].poltronas);
+        }
+        fflush(stdin);
+        printf("Todas as poltronas das salas resetadas!\nEnter to continue");
+        gets(cont);
+        break;
+    case 5:
+        return;
+    default:
+        printf("\nOpção invalida!\nEnter to continue");
+        fflush(stdin);
+        gets(cont);
+    }
+    }while(1);
+}
+
+
+
 
 /*
 void printCineMix(){
