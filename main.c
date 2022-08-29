@@ -409,6 +409,7 @@ int menuAdmin(){
 }
 
 void admin(struct Sala sala[], int quantSalas){
+    int qSala;
     int opcao;
     char cont[5];
     do{
@@ -416,7 +417,7 @@ void admin(struct Sala sala[], int quantSalas){
     opcao = menuAdmin();
     switch(opcao){
     case 1:
-        int qSala = menuSalas(sala,quantSalas);
+        qSala = menuSalas(sala,quantSalas);
         if(qSala==quantSalas+1){
             break;
         }else if(qSala<quantSalas+1 && qSala>0){
