@@ -86,7 +86,7 @@ int menuSalas(struct Sala sala[],int quantSalas){
 }
 
 int escolhaSalas(struct Sala sala[], int quantSalas){
-    char cont[5];
+
     do{
     int opcao = menuSalas(sala,quantSalas);
     if(opcao == quantSalas+1){
@@ -101,18 +101,18 @@ int escolhaSalas(struct Sala sala[], int quantSalas){
             fflush(stdin);
             escolhaReserva(sala[opcao-1].poltronas);
         } else if(sair==2){
-            printf("Enter to continue");
+
             break;
         } else {
             fflush(stdin);
-            printf("Opção invalida!\nEnter to continue");
-            gets(cont);
+            printf("Opção invalida!\n");
+            system("pause");
         }
         }while(1);
     } else
-        printf("\nOpção invalida!\nEnter to continue");
+        printf("Opção invalida!\n");
         fflush(stdin);
-        gets(cont);
+        system("pause");
     }while(1);
 }
 
@@ -142,7 +142,7 @@ int menuPrincipal(){
 }
 
 int escolhaPrincipal(){
-    char cont[5];
+
     do{
     int opcao = menuPrincipal();
     switch(opcao){
@@ -153,9 +153,9 @@ int escolhaPrincipal(){
     case 159753:
         return 10;
     default:
-        printf("\nOpção invalida!\nEnter to continue");
+        printf("Opção invalida!\n");
         fflush(stdin);
-        gets(cont);
+        system("pause");
     }
     }while(1);
 }
@@ -176,11 +176,18 @@ int menuReserva(){
 
 int escolhaReserva(struct Poltrona poltronas[TAM][TAM]){
     int i=0, j=0;
-    char cont[5];
+
     printf("Digite a poltrona desejada: ");
     scanf("%c%d",&i,&j);
-    i -= 'A';
+    i = toupper(i) - 'A';
     j -= 1;
+    if((i<0 || i>=TAM)||(j<0 || j>=TAM)){
+        printf("Opção invalida!\n");
+        fflush(stdin);
+        system("pause");
+        return 0;
+    }
+
     int opcao = menuReserva();
 
     switch (opcao){
@@ -198,16 +205,16 @@ int escolhaReserva(struct Poltrona poltronas[TAM][TAM]){
     case 1987:
         break;
     default:
-        printf("\nOpção invalida!\nEnter to continue");
+        printf("\nOpção invalida!\n");
         fflush(stdin);
-        gets(cont);
+        system("pause");
         break;
     }
 }
 
 
 int reservarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
-    char cont[5];
+
     if(poltronas[i][j].status==0){
         fflush(stdin);
         printf("Digite seu nome: ");
@@ -219,21 +226,21 @@ int reservarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
         gets(poltronas[i][j].cpf);
         }
         poltronas[i][j].status=1;
-        printf("Poltrona %c%d reservada com sucesso!\nEnter to continue",i+'A', j+1);
-        gets(cont);
+        printf("Poltrona %c%d reservada com sucesso!\n",i+'A', j+1);
+        system("pause");
         return 1;
     }
     else{
         fflush(stdin);
-        printf("Poltrona %c%d ocupada!\nEnter to continue", i+'A', j+1);
-        gets(cont);
+        printf("Poltrona %c%d ocupada!\n", i+'A', j+1);
+        system("pause");
         return 0;
     }
 
 }
 
 int comprarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
-    char cont[5];
+
     if(poltronas[i][j].status==0){
         fflush(stdin);
         printf("Digite seu nome: ");
@@ -245,8 +252,8 @@ int comprarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
         gets(poltronas[i][j].cpf);
         }
         poltronas[i][j].status=2;
-        printf("Poltrona %c%d comprada com sucesso!\nEnter to continue",i+'A', j+1);
-        gets(cont);
+        printf("Poltrona %c%d comprada com sucesso!\n",i+'A', j+1);
+        system("pause");
         return 1;
     }else if(poltronas[i][j].status==1){
         fflush(stdin);
@@ -255,29 +262,29 @@ int comprarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
         gets(cpf);
         if(strcmp(cpf, poltronas[i][j].cpf)==0){
             poltronas[i][j].status=2;
-            printf("Poltrona %c%d comprada com sucesso!\nEnter to continue",i+'A', j+1);
-            gets(cont);
+            printf("Poltrona %c%d comprada com sucesso!\n",i+'A', j+1);
+            system("pause");
             return 1;
         } else{
-            printf("CPF digitado diferente do vinculado a reserva da poltrona %c%d!\nEnter to continue",i+'A', j+1);
-            gets(cont);
+            printf("CPF digitado diferente do vinculado a reserva da poltrona %c%d!\n",i+'A', j+1);
+            system("pause");
             return 0;
         }
     }else {
         fflush(stdin);
-        printf("Poltrona %c%d ocupada!\nEnter to continue",i+'A', j+1);
-        gets(cont);
+        printf("Poltrona %c%d ocupada!\n",i+'A', j+1);
+        system("pause");
         return 0;
     }
 }
 
 int cancelarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
 
-    char cont[5];
+
     if(poltronas[i][j].status==0){
         fflush(stdin);
-        printf("Poltrona %c%d desoculpada!\nEnter to continue",i+'A', j+1);
-        gets(cont);
+        printf("Poltrona %c%d desoculpada!\n",i+'A', j+1);
+        system("pause");
         return 0;
     }else if(poltronas[i][j].status==1){
         fflush(stdin);
@@ -286,12 +293,12 @@ int cancelarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
         gets(cpf);
         if(strcmp(cpf, poltronas[i][j].cpf)==0){
             poltronas[i][j].status=0;
-            printf("Reserva da poltrona %c%d cancelada com sucesso!\nEnter to continue",i+'A', j+1);
-            gets(cont);
+            printf("Reserva da poltrona %c%d cancelada com sucesso!\n",i+'A', j+1);
+            system("pause");
             return 1;
         } else{
-            printf("CPF digitado diferente do vinculado a reserva da poltrona %c%d!\nEnter to continue",i+'A', j+1);
-            gets(cont);
+            printf("CPF digitado diferente do vinculado a reserva da poltrona %c%d!\n",i+'A', j+1);
+            system("pause");
             return 0;
         }
     }else if(poltronas[i][j].status==2){
@@ -301,12 +308,12 @@ int cancelarPoltrona(struct Poltrona poltronas[TAM][TAM],int i, int j){
         gets(cpf);
         if(strcmp(cpf, poltronas[i][j].cpf)==0){
             poltronas[i][j].status=0;
-            printf("Compra da poltrona %c%d cancelada com sucesso!\nEnter to continue",i+'A', j+1);
-            gets(cont);
+            printf("Compra da poltrona %c%d cancelada com sucesso!\n",i+'A', j+1);
+            system("pause");
             return 1;
         } else{
-            printf("CPF digitado diferente do vinculado a compra da poltrona %c%d!\nEnter to continue",i+'A', j+1);
-            gets(cont);
+            printf("CPF digitado diferente do vinculado a compra da poltrona %c%d!\n",i+'A', j+1);
+            system("pause");
             return 0;
         }
     }
@@ -411,7 +418,7 @@ int menuAdmin(){
 void admin(struct Sala sala[], int quantSalas){
     int qSala;
     int opcao;
-    char cont[5];
+
     do{
     printCineMix();
     opcao = menuAdmin();
@@ -424,8 +431,8 @@ void admin(struct Sala sala[], int quantSalas){
         atribuirFilmes(sala[qSala-1].filme);
         }else {
             fflush(stdin);
-            printf("Opção invalida!\nEnter to continue");
-            gets(cont);
+            printf("Opção invalida!\n");
+            system("pause");
         }
         break;
     case 2:
@@ -437,8 +444,8 @@ void admin(struct Sala sala[], int quantSalas){
         atribuirFilmes(sala[qSala-1].filme);
         }else {
             fflush(stdin);
-            printf("Opção invalida!\nEnter to continue");
-            gets(cont);
+            printf("Opção invalida!\n");
+            system("pause");
         }
         }
         break;
@@ -449,13 +456,13 @@ void admin(struct Sala sala[], int quantSalas){
             break;
         }else if(qSala<quantSalas+1 && qSala>0){
         resetPoltronas(sala[qSala-1].poltronas);
-        printf("Poltronas da sala %d resetada!\nEnter to continue", qSala);
+        printf("Poltronas da sala %d resetada!\n", qSala);
             fflush(stdin);
-            gets(cont);
+            system("pause");
         }else {
             fflush(stdin);
-            printf("Opção invalida!\nEnter to continue");
-            gets(cont);
+            printf("Opção invalida!\n");
+            system("pause");
         }
         }while(1);
         break;
@@ -464,15 +471,15 @@ void admin(struct Sala sala[], int quantSalas){
         resetPoltronas(sala[i].poltronas);
         }
         fflush(stdin);
-        printf("Todas as poltronas das salas resetadas!\nEnter to continue");
-        gets(cont);
+        printf("Todas as poltronas das salas resetadas!\n");
+        system("pause");
         break;
     case 5:
         return;
     default:
-        printf("\nOpção invalida!\nEnter to continue");
+        printf("Opção invalida!\n");
         fflush(stdin);
-        gets(cont);
+        system("pause");
     }
     }while(1);
 }
