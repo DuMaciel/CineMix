@@ -17,9 +17,6 @@ struct Sala{
     struct Poltrona poltronas[TAM][TAM];
 };
 
-
-
-
 int menuPrincipal();
 int escolhaPrincipal();
 
@@ -41,32 +38,33 @@ void printCineMix();
 
 void atribuirFilmes(char filmes[]);
 
+//Codigo para acessar na tela inicial o menu Admin = 159753
 int menuAdmin();
 void admin(struct Sala sala[], int quantSalas);
 
-int main()
-{
+void lerDB(struct Sala sala[], int tam);
+void escreverDB(struct Sala sala[], int tam);
+
+int main(){
 
     int quantSalas=5;
     struct Sala sala[quantSalas];
-
-    for(int i=0; i<quantSalas; i++){
-    resetPoltronas(sala[i].poltronas);
-    }
+    lerDB(sala,quantSalas);
 
     int escolha=0;
 
-    do{
-    escolha = escolhaPrincipal();
+    //Codigo para acessar na tela inicial o menu Admin = 159753
+    while(escolha = escolhaPrincipal()){
     if(escolha == 0){
-        return 0;
+        break;
     }
     if(escolha == 10){
         admin(sala, quantSalas);
     } else{
     escolhaSalas(sala, quantSalas);
     }
-    }while(1);
+    }
+    escreverDB(sala,quantSalas);
     return 0;
 }
 
@@ -351,8 +349,8 @@ void printCineMix(){
 }
 
 void printarPoltronas(struct Poltrona poltronas[TAM][TAM]){
-    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     CONSOLE_SCREEN_BUFFER_INFO consoleInfo;
+    HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
     WORD saved_attributes;
 
     GetConsoleScreenBufferInfo(hConsole, &consoleInfo);
@@ -484,8 +482,16 @@ void admin(struct Sala sala[], int quantSalas){
     }while(1);
 }
 
-
-
+void lerDB(struct Sala sala[], int tam){
+    FILE *db = fopen(".\\DB.bin", "rb");
+    fread(sala, sizeof(struct Sala), tam, db);
+    fclose(db);
+}
+void escreverDB(struct Sala sala[], int tam){
+    FILE *db = fopen(".\\DB.bin", "wb");
+    fwrite(sala, sizeof(struct Sala), tam, db);
+    fclose(db);
+}
 
 /*
 void printCineMix(){
