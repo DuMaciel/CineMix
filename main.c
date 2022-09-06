@@ -481,11 +481,29 @@ void admin(struct Sala sala[], int quantSalas){
         if(qSala==quantSalas+1){
             break;
         }else if(qSala<quantSalas+1 && qSala>0){
+
+
         do{
         printCineMix();
-        printarPoltronas(sala[qSala].poltronas);
+        printarPoltronas(sala[qSala-1].poltronas);
         int i=0, j=0;
 
+        int opcao=0;
+        do{
+        opcao=menuPoltrona();
+        if(opcao==2||opcao==1){
+          break;
+        }else{
+            printf("Opção invalida!\n");
+            system("pause");
+        }
+        }while(1);
+        if(opcao==2){
+          break;
+        }
+
+
+        fflush(stdin);
         printf("Digite a poltrona desejada: ");
         scanf("%c%d",&i,&j);
         i = toupper(i) - 'A';
@@ -495,10 +513,8 @@ void admin(struct Sala sala[], int quantSalas){
             fflush(stdin);
             system("pause");
         }else{
-            listarDados(sala[qSala].poltronas, i, j);
-            break;
+            listarDados(sala[qSala-1].poltronas, i, j);
         }
-        listarDados(sala[qSala].poltronas, i, j);
         }while(1);
 
 
@@ -533,7 +549,7 @@ void escreverDB(struct Sala sala[], int tam){
 void listarDados(struct Poltrona poltronas[TAM][TAM], int i, int j){
     if(poltronas[i][j].status==0){
         fflush(stdin);
-        printf("Poltrona Comprada");
+        printf("Poltrona Livre");
         printf("\nNome: %s", poltronas[i][j].nome);
         printf("\nCPF: %s\n", poltronas[i][j].cpf);
         system("pause");
@@ -543,7 +559,7 @@ void listarDados(struct Poltrona poltronas[TAM][TAM], int i, int j){
         printf("\nNome: %s", poltronas[i][j].nome);
         printf("\nCPF: %s\n", poltronas[i][j].cpf);
         system("pause");
-    }else if(poltronas[i][j].status==1){
+    }else if(poltronas[i][j].status==2){
         fflush(stdin);
         printf("Poltrona Comprada");
         printf("\nNome: %s", poltronas[i][j].nome);
