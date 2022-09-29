@@ -79,7 +79,7 @@ int menuSalas(struct Sala sala[],int quantSalas){
     }
     printf(" %d - Sair                                                                            ", i+1);
     printf("\n--------------------------------------------------------------------------------------");
-    printf("\nDigite a sala desejada: ");
+    printf("\nDigite a opção desejada: ");
     scanf("%d",&opcao);
     return opcao;
 }
@@ -408,8 +408,7 @@ int menuAdmin(){
     printf("\n| 3 - Resetar poltronas de uma sala                                                  |");
     printf("\n| 4 - Resetar poltronas de todas as salas                                            |");
     printf("\n| 5 - Listar dados de uma poltrona                                                   |");
-    printf("\n| 6 - ?                                                                              |");
-    printf("\n| 7 - Sair                                                                           |");
+    printf("\n| 6 - Sair                                                                           |");
     printf("\n--------------------------------------------------------------------------------------\n");
     printf("Digite a opção desejada: ");
     scanf("%d",&opcao);
@@ -525,7 +524,7 @@ void admin(struct Sala sala[], int quantSalas){
         }
         }while(1);
         break;
-    case 7:
+    case 6:
         return;
     default:
         printf("Opção invalida!\n");
